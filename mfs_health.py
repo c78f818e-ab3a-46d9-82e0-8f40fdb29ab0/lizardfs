@@ -20,16 +20,13 @@ def get_chunks(master, port=9421):
     try:
         mymfs = moosefs.MooseFS(masterhost=master, masterport=port)
     except socket.error, e:
-        print '\nError de conexion: %s\n' % str(e)
-        chunks['sin_copias'] = 0
-        chunks['menos_copias'] = 0
-        chunks['a_borrar'] = 0
+        print '\nError connection: %s\n' % str(e)
         return chunks
 
-    myinfo = mymfs.mfs_info()
-    masterinfo = myinfo['info']
-    matrixinfo = myinfo['matrix']
-    chunk_info = myinfo['chunk_info']
+    mfsinfo = mfsinfo.mfs_info()
+    masterinfo = mfsinfo['info']
+    matrixinfo = mfsinfo['matrix']
+    chunk_info = mfsinfo['chunk_info']
 
     missing = int(sum([matrixinfo[x][0] for x in range(1,5)]))
     undergoal = int(chunk_info['replications_under_goal_out_of'])
